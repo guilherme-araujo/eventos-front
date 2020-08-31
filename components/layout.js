@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Head from 'next/head'
 import Link from 'next/link'
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Container, Nav } from 'react-bootstrap';
 import layoutStyle from '../styles/layout.module.css'
 
 const name = 'BioME'
@@ -45,8 +45,12 @@ export default function Layout({ children, home }) {
                             <Navbar.Collapse id="basic-navbar-nav ">
 
                                 <Nav className="p-3 ">
-                                    <Nav.Link href="/cadastro">Cadastro</Nav.Link>
-                                    <Nav.Link href="/login">Login</Nav.Link>
+                                    <Link href="/registration" passHref>
+                                        <Nav.Link>Cadastro</Nav.Link>
+                                    </Link>
+                                    <Link href="/login" passHref>
+                                        <Nav.Link>Login</Nav.Link>
+                                    </Link>
                                 </Nav>
                             </Navbar.Collapse>
                         </Container>
