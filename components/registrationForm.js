@@ -33,11 +33,11 @@ export default function RegistrationForm({ countryList, stateList }) {
         <h1>Loading...</h1>
     )
 
-    if (!data.open) {
+    if (!(data.open==="true")) {
         return (
             <Container>
                 <section >
-                    <h1 style="text-align:center">Inscrições encerradas</h1>
+                    <h1 >Inscrições encerradas</h1>
                 </section>
             </Container>
         )
@@ -131,7 +131,6 @@ export default function RegistrationForm({ countryList, stateList }) {
                                     {countryList.map( (country, index) => (
                                         <option value={country.id} key={index} >{country.name}</option>
                                     ))}
-                                    {console.log(countryList)}
                                     <option value="brazil" >Brazil</option>
                                 </select>
                             </div>
