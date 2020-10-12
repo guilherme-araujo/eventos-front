@@ -11,13 +11,6 @@ import Input from '../components/Form/Input'
 export default function Unform() {
     const formRef = useRef(null)
 
-    const user = {
-        name: "Lucas",
-        address: {
-            street:'Eucaliptos',
-            number: 123,
-        }
-    }
 
     async function handleSubmit(data, { reset }) {
 
@@ -26,12 +19,15 @@ export default function Unform() {
                 name: Yup.string().required('O nome é obrigatório'),
                 email: Yup.string()
                     .email('Digite um e-mail válido')
-                    .required('O e-mail é obrigatório'),
-                address: Yup.object().shape({
+                    .required('O e-mail é obrigatório')
+
+                // Exemplo de validação para atributos compostos
+                    /*address: Yup.object().shape({
                     city: Yup.string()
                         .min(3, 'No mínimo 3 caracters')
                         .required('A cidade é obrigatória')
                 })
+                */
             })        
             
             await schema.validate(data, {
@@ -50,24 +46,22 @@ export default function Unform() {
                     errorMessages[error.path] = error.message
                 })
 
-                formRef.curent.setErrors(errorMessages)
+                formRef.current.setErrors(errorMessages)
             }
         }
         
     }
-
+    /* Essa parte foi só para testar o autopreenchimento de alguns campos buscando os dados
     useEffect(() => {
         setTimeout(() => {
             formRef.current.setData({
                name: 'Lucas Vieira',
                email: 'lucas208@ufrn.edu.br',
-               address: {
-                   city:'Natal'
-               } 
+               
             })
         }, 2000)
     }, [])
-    
+    */
     return (
         <Layout>
 
@@ -82,20 +76,28 @@ export default function Unform() {
                     <Container >
                         <div className="row">
                             <div className="col-md-12 text-left section-heading" >
-                                <div className="heading-block topmargin-sm"><h2>Cadastro</h2></div>
+                                <div className="heading-block topmargin-sm"><h2>Registration</h2></div>
                             </div>
                             <Form ref={formRef}  onSubmit={handleSubmit}>
-                                <Input name="name" />
-                                <Input type="email" name="email" />
-                                <Input type="password" name="password" />
-                                
-                                <Scope path="address">
-                                    <Input name="street" />
-                                    <Input name="city" />
-                                    <Input name="state" />
-                                    <Input name="neighborhood" />
-                                    <Input name="number" />
+                                <Input name="name" placeholder="name" />
+                                <Input type="email" name="email" placeholder="email" />
+                                <Input type="password" name="password" placeholder="password" />
+                                <Input name="course" placeholder="course" />
+                                <Input name="phone" placeholder="phone" />
+                                <Scope path="country">
+                                    <Input name="id" placeholder="country_id"/>
                                 </Scope>
+                                <Scope path="state">
+                                    <Input name="id" placeholder="state_id"/>
+                                </Scope>
+                                <Scope path="city">
+                                    <Input name="id" placeholder="city_id"/>
+                                </Scope>
+                                <Input name="address" placeholder="address" />
+                                <Scope path="registrationType">
+                                    <Input name="id" placeholder="type_id"/>
+                                </Scope>
+
                                 <button type="submit">Enviar</button>
                             </Form>
                         </div>
