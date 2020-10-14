@@ -5,6 +5,7 @@ import { Container } from 'react-bootstrap'
 import { Form } from '@unform/web'
 import { Scope } from '@unform/core'
 import * as Yup from 'yup'
+import { getCountryList, getStateList } from '../lib/staticFormData';
 
 import Input from '../components/Form/Input'
 
@@ -85,7 +86,7 @@ export default function Unform() {
                                 <Input name="course" placeholder="course" />
                                 <Input name="phone" placeholder="phone" />
                                 <Scope path="country">
-                                    <Input name="id" placeholder="country_id"/>
+                                    <AsyncSelect name="id" placeholder="country_id"/>
                                 </Scope>
                                 <Scope path="state">
                                     <Input name="id" placeholder="state_id"/>
@@ -111,3 +112,13 @@ export default function Unform() {
     )
 }
 
+export async function getStaticProps() {
+    const countryList = await getCountryList()
+    const stateList = await getStateList()
+    return {
+        props: {
+            countryList,
+            stateList
+        }
+    }
+  }
