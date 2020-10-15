@@ -4,13 +4,14 @@ import fetcher from '../lib/fetcher';
 import ProfileType from './fromComponents/profileType';
 import { useState } from 'react';
 
-export default function RegistrationForm({ countryList, stateList }) {
+export default function RegistrationForm({ countryList, stateList, cityList }) {
 
     const { data, error } = useSWR('/api/registration_active', fetcher);
 
     const [profile, setProfile] = useState("");
     const [selectedCountry, setCountry] = useState("");
     const [selectedState, setState] = useState("");
+    const [selectedCity, setCity] = useState("");
 
     const updateProfileType = event => {
         setProfile(event.target.value);
@@ -24,6 +25,12 @@ export default function RegistrationForm({ countryList, stateList }) {
     const updateState = event => {
         setState(event.target.value);
     }
+
+
+    const updateCity = event => {
+        setCity(event.target.value);
+    }
+
 
     if (error) return (
         <h1>Erro</h1>
@@ -154,8 +161,11 @@ export default function RegistrationForm({ countryList, stateList }) {
                         <div className="row">
                             <div className="col-lg-4 col-md-4 form-group">
                                 <label htmlFor="city">Cidade</label>
-                                <select size="1" name="city" id="city" className="form-control required" required disabled>
+                                <select size="1" onChange={updateCity} value={selectedCity} name="city" id="city" className="form-control required" required disabled>
                                     <option value="" >Selecione sua cidade</option>
+                                        {cityList.map((city, index) =>(
+                                            <option value={city.id} key={index}>{city.name}</option>
+                                        ))}
                                 </select>
                             </div>
 

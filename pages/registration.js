@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import Layout from '../components/layout'
 import { Container } from 'react-bootstrap'
-import { getCountryList, getStateList } from '../lib/staticFormData';
+import { getCountryList, getStateList, getCityList } from '../lib/staticFormData';
 
 import RegistrationForm from '../components/registrationForm'
 
-export default function Registration({ countryList, stateList }) {
+export default function Registration({ countryList, stateList, cityList }) {
     
     return (
         <Layout>
@@ -27,7 +27,7 @@ export default function Registration({ countryList, stateList }) {
                     </Container>
                 </section>            
 
-                <RegistrationForm countryList={countryList} stateList={stateList} />
+                <RegistrationForm countryList={countryList} stateList={stateList} cityList={cityList} />
 
             </main>
 
@@ -37,13 +37,15 @@ export default function Registration({ countryList, stateList }) {
     )
 }
 
-export async function getStaticProps() {
+export async function getStaticProps(id) {
     const countryList = await getCountryList()
     const stateList = await getStateList()
+    const cityList = await getCityList(id)
     return {
         props: {
             countryList,
-            stateList
+            stateList,
+            cityList,
         }
     }
 }
