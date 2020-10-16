@@ -5,7 +5,9 @@ import { getCountryList, getStateList, getCityList } from '../lib/staticFormData
 
 import RegistrationForm from '../components/registrationForm'
 
-export default function Registration({ countryList, stateList, cityList }) {
+export default function Registration({ countryList, stateList, cityListByState }) {
+
+    console.log(cityListByState)
     
     return (
         <Layout>
@@ -27,7 +29,7 @@ export default function Registration({ countryList, stateList, cityList }) {
                     </Container>
                 </section>            
 
-                <RegistrationForm countryList={countryList} stateList={stateList} cityList={cityList} />
+                <RegistrationForm countryList={countryList} stateList={stateList} cityList={cityListByState} />
 
             </main>
 
@@ -37,15 +39,19 @@ export default function Registration({ countryList, stateList, cityList }) {
     )
 }
 
-export async function getStaticProps(id) {
+export async function getStaticProps() {
     const countryList = await getCountryList()
-    const stateList = await getStateList()
-    const cityList = await getCityList(id)
+    const stateList = await getStateList(),
+    cityListByState = {}
+    for (const state of stateList) {
+        cityListByState[state.id] = await getCityList(state.id)
+    }
+    
     return {
         props: {
             countryList,
             stateList,
-            cityList,
+            cityListByState,
         }
     }
 }
