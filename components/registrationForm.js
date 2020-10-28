@@ -6,13 +6,57 @@ import { useState, useEffect } from 'react';
 
 export default function RegistrationForm({ countryList, stateList, cityList }) {
 
+    const handleSubmit = event => {
+        event.preventDefault();
+        console.log(name);
+        console.log(email);
+        console.log(phone);
+        console.log(profile);
+        console.log(password);
+        console.log(address);
+        console.log(selectedCountry);
+        console.log(selectedState);
+        console.log(selectedCity);
+      }
+
+
     const { data, error } = useSWR('/api/registration_active', fetcher);
 
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [profile, setProfile] = useState("");
+    const [password, setPassword] = useState("");
+    const [course, setCourse] = useState("");
+    const [address, setAddress] = useState("");
     const [selectedCountry, setCountry] = useState("");
     const [selectedState, setState] = useState("");
     const [selectedCity, setCity] = useState("");
     const [selectedCitiesInState, setSelectedCitiesInState] = useState([])
+    
+    const updateName = event => {
+        setName(event.target.value);
+    } 
+
+    const updateEmail = event => {
+        setEmail(event.target.value);
+    } 
+
+    const updatePhone = event => {
+        setPhone(event.target.value);
+    } 
+
+    const updatePassword = event => {
+        setPassword(event.target.value);
+    } 
+
+   const updateCourse = event => {
+    setCourse(event.target.value);
+   } 
+
+    const updateAddress = event => {
+        setAddress(event.target.value);
+    } 
 
     const updateProfileType = event => {
         setProfile(event.target.value);
@@ -67,7 +111,7 @@ export default function RegistrationForm({ countryList, stateList, cityList }) {
                         </div>
                     </div>
 
-                    <form method="post" >
+                    <form  onSubmit={handleSubmit} method="post" >
 
                         <div className="row">
                             <h6 className="text-uppercase ">Informações pessoais</h6>
@@ -79,7 +123,7 @@ export default function RegistrationForm({ countryList, stateList, cityList }) {
                             {/* Nome Completo*/}
                             <div className="col-lg-12 col-md-12 form-group">
                                 <label htmlFor="name">Nome completo</label>
-                                <input type="text" className="form-control" id="name" name="name" required />
+                                <input onChange={updateName} type="text" className="form-control" id="name" name="name" required />
                             </div>
                         </div>
 
@@ -87,13 +131,13 @@ export default function RegistrationForm({ countryList, stateList, cityList }) {
                         <div className="row">
                             <div className=" col-lg-8 col-md-8 form-group">
                                 <label htmlFor="email">Email</label>
-                                <input type="email" className="form-control" id="email" name="email" required />
+                                <input onChange={updateEmail} type="email" className="form-control" id="email" name="email" required />
 
                             </div>
 
                             <div className=" col-lg-4 col-md-4 form-group">
                                 <label htmlFor="telephone">Telefone</label>
-                                <input type="tel" placeholder="00 0000-0000" className="form-control" id="telephone" name="telephone" required />
+                                <input onChange={updatePhone} type="tel" placeholder="00 0000-0000" className="form-control" id="telephone" name="telephone" required />
 
                             </div>
                         </div>
@@ -104,7 +148,7 @@ export default function RegistrationForm({ countryList, stateList, cityList }) {
                             {/* <!-- Senha --> */}
                             <div className="col-lg-4 col-md-4 form-group">
                                 <label htmlFor="password">Senha</label>
-                                <input type="password" className="form-control" id="password" name="password" required />
+                                <input onChange={updatePassword} type="password" className="form-control" id="password" name="password" required />
 
                             </div>
 
@@ -120,8 +164,8 @@ export default function RegistrationForm({ countryList, stateList, cityList }) {
                                 <label htmlFor="name">Perfil</label>
                                 <select onChange={updateProfileType} size="1" name="perfil" id="perfil" className="form-control required" required>
                                     <option value="" >Selecione um tipo</option>
-                                    <option value="professional">Profissional</option>
-                                    <option value="student">Estudante</option>
+                                    <option value="1">Profissional</option>
+                                    <option value="2">Estudante</option>
 
                                 </select>
 
@@ -150,7 +194,7 @@ export default function RegistrationForm({ countryList, stateList, cityList }) {
 
                             <div className="col-lg-4 col-md-4 form-group">
                                 <label htmlFor="zipcode">CEP</label>
-                                <input type="text" className="form-control" id="zipcode" name="zipcode" required disabled={selectedCountry !== "30"} />
+                                <input  type="text" className="form-control" id="zipcode" name="zipcode" required disabled={selectedCountry !== "30"} />
                             </div>
 
                             <div className="col-lg-4 col-md-4 form-group">
@@ -183,7 +227,7 @@ export default function RegistrationForm({ countryList, stateList, cityList }) {
 
                             <div className="col-lg-8 col-md-8 form-group">
                                 <label htmlFor="address">Logradouro</label>
-                                <input type="text" className="form-control" id="adress" name="adress" />
+                                <input onChange={updateAddress} type="text" className="form-control" id="adress" name="adress" />
 
                             </div>
                         </div>
