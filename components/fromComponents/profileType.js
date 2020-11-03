@@ -1,6 +1,7 @@
-
-
 export default function ProfileType(props) {
+
+    
+
     if (props.profile == "") {
         return (
             <>
@@ -38,6 +39,7 @@ export default function ProfileType(props) {
         )
     } else {
         return (
+            
 
             <div className="row row-perfil-estudante" id="row-perfil-estudante">
                 {/* <!-- Instituicao --> */}
@@ -49,7 +51,7 @@ export default function ProfileType(props) {
                 {/* <!-- Curso --> */}
                 <div className="col-lg-4 col-md-4 form-group">
                     <label htmlFor="Curso">Curso</label>
-                    <input type="text" className="form-control" id="curso" name="curso" />
+                    <input onChange={props.action} type="text" className="form-control" id="course" name="course" required />
                 </div>
 
                 {/* <!-- Formação --> */}

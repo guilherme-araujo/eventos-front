@@ -8,31 +8,52 @@ export default function RegistrationForm({ countryList, stateList, cityList }) {
 
     const handleSubmit = event => {
         event.preventDefault();
-        console.log(name);
-        console.log(email);
-        console.log(phone);
-        console.log(profile);
-        console.log(password);
-        console.log(address);
-        console.log(selectedCountry);
-        console.log(selectedState);
-        console.log(selectedCity);
+        
+        fetch('http://localhost:3333/backend-eventos/users/',{
+            headers: { 'Content-Type': 'application/json' },
+            method: 'post',
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                password: password,
+                course: course,
+                phone: phone,
+                country:{
+                    id:selectedCountry
+                },
+                state:{
+                    id:selectedState
+                },
+                city:{
+                    id:selectedCity
+                },
+                address: address,
+                registrationType: {
+                    id: profile
+                } 
+            })
+        })
       }
 
-
     const { data, error } = useSWR('/api/registration_active', fetcher);
+
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [profile, setProfile] = useState("");
     const [password, setPassword] = useState("");
-    const [course, setCourse] = useState("");
     const [address, setAddress] = useState("");
     const [selectedCountry, setCountry] = useState("");
     const [selectedState, setState] = useState("");
     const [selectedCity, setCity] = useState("");
     const [selectedCitiesInState, setSelectedCitiesInState] = useState([])
+    const [course, setCourse] = useState("");
+
+    
+    const updateCourse = event => {
+        setCourse(event.target.value);
+    } 
     
     const updateName = event => {
         setName(event.target.value);
@@ -49,10 +70,6 @@ export default function RegistrationForm({ countryList, stateList, cityList }) {
     const updatePassword = event => {
         setPassword(event.target.value);
     } 
-
-   const updateCourse = event => {
-    setCourse(event.target.value);
-   } 
 
     const updateAddress = event => {
         setAddress(event.target.value);
@@ -172,7 +189,7 @@ export default function RegistrationForm({ countryList, stateList, cityList }) {
                             </div>
                         </div>
 
-                        <ProfileType profile={profile} />
+                        <ProfileType profile={profile} action={updateCourse.bind(this)}/>
 
                         <div className="row">
                             <h6 className="text-uppercase ">Endereço</h6>
