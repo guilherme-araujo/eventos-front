@@ -5,34 +5,31 @@ import ProfileType from './fromComponents/profileType';
 import { useState, useEffect } from 'react';
 
 export default function RegistrationForm({ countryList, stateList, cityList }) {
+    const axios = require('axios');
 
     const handleSubmit = event => {
         event.preventDefault();
-        
-        fetch('http://localhost:3333/backend-eventos/users/',{
-            headers: { 'Content-Type': 'application/json' },
-            method: 'post',
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password,
-                course: course,
-                phone: phone,
-                country:{
-                    id:selectedCountry
-                },
-                state:{
-                    id:selectedState
-                },
-                city:{
-                    id:selectedCity
-                },
-                address: address,
-                registrationType: {
-                    id: profile
-                } 
-            })
+        axios.post('http://localhost:3333/backend-eventos/users', {
+            name: name,
+            email: email,
+            password: password,
+            course: course,
+            phone: phone,
+            country:{
+                id:selectedCountry
+            },
+            state:{
+                id:selectedState
+            },
+            city:{
+                id:selectedCity
+            },
+            address: address,
+            registrationType: {
+                id: profile
+            } 
         })
+    
       }
 
     const { data, error } = useSWR('/api/registration_active', fetcher);
